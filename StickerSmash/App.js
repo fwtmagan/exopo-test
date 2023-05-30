@@ -2,6 +2,8 @@
 
 import * as React from "react";
 import { Button, View, Text } from "react-native";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -35,13 +37,29 @@ function DetailsScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [count, setCount] = useState(0); //カウント保存用
+  useEffect(() => {
+    (async () => {
+      const count = await AsyncStorage.getItem("count"); // 保存されたcountを取得する処理
+      setCount(Number(count || 0) + 1); // Numberに変換してインクリメントする
+    })();
+  }, []);
+  useEffect(() => {
+    if (count) {
+      AsyncStorage.setItem("count", String(count)); // 文字列型に変換して保存する
+    }
+  }, [count]);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <Text>{`${count}`}</Text>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
