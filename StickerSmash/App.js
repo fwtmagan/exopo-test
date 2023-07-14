@@ -1,5 +1,3 @@
-// In App.js in a new project
-
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,6 +12,7 @@ function App() {
     headerStyle: {
       backgroundColor: "#D0F6FE",
     },
+    headerTitle: "",
   };
 
   return (
