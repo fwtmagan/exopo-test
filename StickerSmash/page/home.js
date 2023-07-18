@@ -7,9 +7,9 @@ import {
   StyleSheet,
   ImageBackground,
 } from "react-native";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import Nav from "./nav";
 
-function HomeScreen({}) {
+function HomeScreen({ navigation }) {
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
@@ -44,6 +44,8 @@ function HomeScreen({}) {
         source={require("../assets/wallpaper.png")}
         style={styles.backgroundImage}
       ></ImageBackground>
+      <Nav navigation={navigation} />
+      {/* Moved Nav component after the ImageBackground */}
     </View>
   );
 }
