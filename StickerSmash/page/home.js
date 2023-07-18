@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   View,
@@ -6,10 +7,26 @@ import {
   StyleSheet,
   ImageBackground,
 } from "react-native";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function HomeScreen({ navigation }) {
+function HomeScreen({}) {
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      const now = new Date();
+      const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      };
+      const timeString = now.toLocaleTimeString(undefined, options);
+      setCurrentTime(timeString);
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, []);
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <ImageBackground
@@ -17,9 +34,10 @@ function HomeScreen({ navigation }) {
         style={styles.container}
       ></ImageBackground>
       <View style={styles.centerContainer}>
+        <Text style={styles.currentTimeText}>{currentTime}</Text>
         <Image
           style={styles.samurai}
-          source={require("../assets/samurai_01.gif")}
+          source={require("../assets/samurai_01.png")}
         />
       </View>
       <ImageBackground
@@ -40,24 +58,29 @@ const styles = StyleSheet.create({
     resizeMode: "repeat",
   },
   centerContainer: {
-    flex: 1,
+    flex: 5,
     alignItems: "center",
     justifyContent: "center",
   },
   backgroundImage: {
     width: "100%",
-    height: 170,
-    flex: 1,
+    height: "auto",
+    flex: 3,
     alignItems: "center",
     justifyContent: "center",
     resizeMode: "repeat",
   },
   samurai: {
-    width: 180,
-    height: 180,
+    width: 250,
+    height: 250,
     alignItems: "center",
     justifyContent: "center",
     resizeMode: "contain",
+  },
+  currentTimeText: {
+    fontSize: 40,
+    fontWeight: "bold",
+    //marginTop: 10,
   },
 });
 

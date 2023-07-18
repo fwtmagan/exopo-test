@@ -1,46 +1,87 @@
-import React, { useState, useEffect } from "react";
-import { Button, Image, View, Text, Platform } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import React, { useEffect, useState } from "react";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function SecondScreen() {
-  const [image, setImage] = useState(null);
+function SecondScreen({}) {
+  const [currentTime, setCurrentTime] = useState("");
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // All 包含相片、影像
-      allowsEditing: true, // 允許編輯
-      allowsMultipleSelection: true, // 允許多張選取
-      aspect: [4, 3], // 比例
-      quality: 1, // 壓縮比例 數值0-1（小數點也可設定）
-    });
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      const now = new Date();
+      const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      };
+      const timeString = now.toLocaleTimeString(undefined, options);
+      setCurrentTime(timeString);
+    }, 1000);
 
-    console.log(result);
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
+    return () => clearInterval(timerId);
+  }, []);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Second Screen</Text>
-        <Button title="Go back" onPress={() => navigation.goBack()} />{" "}
+      <ImageBackground
+        source={require("../assets/ceiling.png")}
+        style={styles.container}
+      ></ImageBackground>
+      <View style={styles.centerContainer}>
+        <Text style={styles.currentTimeText}>{currentTime}</Text>
+        <Image
+          style={styles.samurai}
+          source={require("../assets/samurai_03.png")}
+        />
       </View>
+      <ImageBackground
+        source={require("../assets/wallpaper.png")}
+        style={styles.backgroundImage}
+      ></ImageBackground>
     </View>
   );
 }
 
-// function SecondScreen({ navigation }) {
-//   return (
-//     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-//       <Text>Second Screen</Text>
-//       <Button title="Go back" onPress={() => navigation.goBack()} />
-//     </View>
-//   );
-// }
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: 135,
+    flex: 3,
+    alignItems: "center",
+    justifyContent: "center",
+    resizeMode: "repeat",
+  },
+  centerContainer: {
+    flex: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  backgroundImage: {
+    width: "100%",
+    height: 200,
+    flex: 3,
+    alignItems: "center",
+    justifyContent: "center",
+    resizeMode: "repeat",
+  },
+  samurai: {
+    width: 250,
+    height: 250,
+    alignItems: "center",
+    justifyContent: "center",
+    resizeMode: "contain",
+  },
+  currentTimeText: {
+    fontSize: 40,
+    fontWeight: "bold",
+    //marginTop: 10,
+  },
+});
+
+export default SecondScreen;
