@@ -2,15 +2,15 @@ import React from "react";
 import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 
 const Nav = ({ navigation }) => {
-  const handleButtonPress = () => {
-    // Add your logic here for handling button press if needed
+  const handleButtonPress = (screenName) => {
+    navigation.navigate(screenName);
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.button, styles.button1]}
-        onPress={handleButtonPress}
+        onPress={() => handleButtonPress("Samurai")} // Navigate to Samurai.js
       >
         <Image
           style={styles.buttonImage}
@@ -19,7 +19,7 @@ const Nav = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, styles.button2]}
-        onPress={handleButtonPress}
+        onPress={() => handleButtonPress("Add")} // Navigate to add.js
       >
         <Image
           style={styles.buttonImage}
@@ -28,7 +28,7 @@ const Nav = ({ navigation }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, styles.button3]}
-        onPress={handleButtonPress}
+        onPress={() => handleButtonPress("Rank")} // Navigate to rank.js
       >
         <Image
           style={styles.buttonImage}
@@ -46,8 +46,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 5,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    //padding: 5,
+    backgroundColor: "#fff", // Background color for the button menu
+    opacity: 0.8,
     width: "100%",
     shadowColor: "#000",
     shadowOffset: {
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     width: 100, // Adjust the size of the button image
     height: 100,
     resizeMode: "contain",
+    opacity: 1,
   },
   button1: {
     backgroundColor: "transparent", // Background color for button 1
