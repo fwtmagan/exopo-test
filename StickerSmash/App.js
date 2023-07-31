@@ -5,6 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./page/home";
 import SamuraiScreen from "./page/samurai";
+import AddScreen from "./page/add";
+import RankScreen from "./page/rank";
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -41,6 +43,8 @@ function App() {
         <Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Samurai" component={SamuraiScreen} />
+          <Stack.Screen name="Add" component={AddScreen} />
+          <Stack.Screen name="Rank" component={RankScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

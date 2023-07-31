@@ -7,9 +7,9 @@ import {
   StyleSheet,
   ImageBackground,
 } from "react-native";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import Nav from "./nav";
 
-function SecondScreen({}) {
+function PlayScreen({ navigation }) {
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
@@ -44,6 +44,8 @@ function SecondScreen({}) {
         source={require("../assets/wallpaper.png")}
         style={styles.backgroundImage}
       ></ImageBackground>
+      <Nav navigation={navigation} />
+      {/* Moved Nav component after the ImageBackground */}
     </View>
   );
 }
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: 200,
+    height: "auto",
     flex: 3,
     alignItems: "center",
     justifyContent: "center",
@@ -84,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecondScreen;
+export default PlayScreen;
